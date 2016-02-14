@@ -41,3 +41,9 @@
 #include <nanomsg/tcpmux.h>
 
 #include <nanomsg/ws.h>
+
+static char* nn_recv_wrap(int sock, int flags) {
+    char* buf = NULL;
+    int bytes = nn_recv(sock, &buf, NN_MSG, flags);
+    return buf;
+}
