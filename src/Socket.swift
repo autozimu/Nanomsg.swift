@@ -55,6 +55,7 @@ public class Socket {
         self.proto = proto
 
         socketid = nn_socket(domain.rawValue, proto.rawValue)
+        assert(socketid >= 0)
     }
 
     func bind(addr: String) {
