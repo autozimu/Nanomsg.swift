@@ -58,6 +58,10 @@ public class Socket {
         assert(socketid >= 0)
     }
 
+    deinit {
+        shutdown()
+    }
+
     func bind(addr: String) {
         addr.withCString { caddr in
             eid = nn_bind(socketid, caddr)
@@ -87,12 +91,23 @@ public class Socket {
         return length
     }
 
-    // func recv(flags: CInt = 0) -> String? {
-    //     let buf = nn_recv(socketid, flags)
-    //     let str = String.fromCString(buf)
-    //     nn_freemsg(buf)
-    //     return str
-    // }
+    func recv(flags: CInt = 0) -> String? {
+        let buffsize = 100
+        var buff = [CChar](count: buffsize, repeatedValue: 0)
+        buff.withUnsafeMutableBufferPointer { p in
+            nn_recv(socketid, p.baseAddress, buffsize, flags)
+        }
+        return String.fromCString(buff)
+
+        // let buff = UnsafeMutablePointer<Void>.alloc(0)
+        // // NN_MSG = ((size_t) - 1)
+        // // 4294967295 = 2 ^ 32 - 1
+        // let bytes = nn_recv(socketid, buff, 4294967295, 0)
+        // print("RECEIVED: \(bytes) bytes")
+        // let str = String.fromCString(UnsafeMutablePointer<CChar>(buff))
+        // // nn_freemsg(buff)
+        // return str
+    }
 }
 
 func strerror(errnum: Int) -> String? {
