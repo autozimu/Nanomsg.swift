@@ -80,6 +80,14 @@ public class Socket {
         nn_shutdown(socketid, eid)
     }
 
+    func setsockopt(level: Int, option: Int, optval: Object) {
+        // TODO
+    }
+
+    func getsockopt(level: Int, option: Int, optval: Object) {
+        // TODO
+    }
+
     func send(msg: String, flags: CInt = 0) -> Int {
         let sz_msg = msg.characters.count + 1
         var length = 0
@@ -107,6 +115,14 @@ public class Socket {
         // let str = String.fromCString(UnsafeMutablePointer<CChar>(buff))
         // // nn_freemsg(buff)
         // return str
+    }
+
+    func nn_sendmsg() {
+        // TODO
+    }
+
+    func nn_redvmsg() {
+        // TODO
     }
 }
 
