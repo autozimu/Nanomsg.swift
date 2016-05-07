@@ -80,11 +80,11 @@ public class Socket {
         nn_shutdown(socketid, eid)
     }
 
-    func setsockopt(level: Int, option: Int, optval: Object) {
+    func setsockopt(level: Int, option: Int, optval: AnyObject) {
         // TODO
     }
 
-    func getsockopt(level: Int, option: Int, optval: Object) {
+    func getsockopt(level: Int, option: Int, optval: AnyObject) {
         // TODO
     }
 
@@ -101,11 +101,11 @@ public class Socket {
 
     func recv(flags: CInt = 0) -> String? {
         let buffsize = 100
-        var buff = [CChar](count: buffsize, repeatedValue: 0)
+        var buff = [CChar](repeating: 0, count: buffsize)
         buff.withUnsafeMutableBufferPointer { p in
             nn_recv(socketid, p.baseAddress, buffsize, flags)
         }
-        return String.fromCString(buff)
+        return String(cString: buff)
 
         // let buff = UnsafeMutablePointer<Void>.alloc(0)
         // // NN_MSG = ((size_t) - 1)
@@ -126,6 +126,3 @@ public class Socket {
     }
 }
 
-func strerror(errnum: Int) -> String? {
-    return String.fromCString(nn_strerror(CInt(errnum)))
-}
