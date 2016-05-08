@@ -96,42 +96,44 @@ public class Socket {
     // Send a message.
     func send(msg: [UInt8], flags: CInt = 0) -> CInt {
         let sz_msg = msg.count
-        var sentLen: CInt = 0
+        var nSent: CInt = 0
 
-        sentLen = nn_send(socketid, msg, sz_msg, flags)
+        nSent = nn_send(socketid, msg, sz_msg, flags)
 
-        assert(Int(sentLen) == sz_msg)
-        return sentLen
+        assert(Int(nSent) == sz_msg)
+        return nSent
     }
 
     // Send a string.
     func send(msg: String, flags: CInt = 0) -> CInt {
         let sz_msg = msg.characters.count + 1
-        var sentLen: CInt = 0
+        var nSent : CInt = 0
 
-        sentLen = nn_send(socketid, msg, sz_msg, flags)
+        nSent = nn_send(socketid, msg, sz_msg, flags)
 
-        assert(Int(sentLen) == sz_msg)
-        return sentLen
+        assert(Int(nSent) == sz_msg)
+        return nSent
     }
 
     // Receive a message.
-    func recv(flags: CInt = 0) -> String? {
-        let buffsize = 100
-        var buff = [CChar](repeating: 0, count: buffsize)
-        buff.withUnsafeMutableBufferPointer { p in
-            nn_recv(socketid, p.baseAddress, buffsize, flags)
-        }
-        return String(cString: buff)
+    func recv(flags: CInt = 0) -> UnsafeMutableBufferPointer<UInt8> {
+        let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
+        let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
+        pp.pointee = p;
+        // NN_MSG = ((size_t) - 1)
+        // 4294967295 = 2 ^ 32 - 1
+        let nRecv = nn_recv(socketid, p, 4294967295, flags)
+        // print("RECEIVED: \(nRecv) bytes")
+        return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
+    }
 
-        // let buff = UnsafeMutablePointer<Void>.alloc(0)
-        // // NN_MSG = ((size_t) - 1)
-        // // 4294967295 = 2 ^ 32 - 1
-        // let bytes = nn_recv(socketid, buff, 4294967295, 0)
-        // print("RECEIVED: \(bytes) bytes")
-        // let str = String.fromCString(UnsafeMutablePointer<CChar>(buff))
-        // // nn_freemsg(buff)
-        // return str
+    // Receive a string.
+    func recvstr(flags: CInt = 0) -> String? {
+        if let cstr = recv(flags: flags).baseAddress {
+            return String(cString: UnsafePointer<CChar>(cstr))
+        } else {
+            return nil
+        }
     }
 
     // Fine-grained alternative to send.
