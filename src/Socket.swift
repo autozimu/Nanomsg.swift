@@ -95,18 +95,24 @@ public class Socket {
 
     // Send a message.
     func send(msg: [UInt8], flags: CInt = 0) -> CInt {
-        let msgSize = msg.count
+        let sz_msg = msg.count
+        var sentLen: CInt = 0
 
-        let sentLen = nn_send(socketid, msg, msgSize, flags)
+        sentLen = nn_send(socketid, msg, sz_msg, flags)
 
-        assert(Int(sentLen) == msgSize)
+        assert(Int(sentLen) == sz_msg)
         return sentLen
     }
 
     // Send a string.
     func send(msg: String, flags: CInt = 0) -> CInt {
-        let bytes = [UInt8](msg.utf8)
-        return send(msg: bytes, flags: flags)
+        let sz_msg = msg.characters.count + 1
+        var sentLen: CInt = 0
+
+        sentLen = nn_send(socketid, msg, sz_msg, flags)
+
+        assert(Int(sentLen) == sz_msg)
+        return sentLen
     }
 
     // Receive a message.
