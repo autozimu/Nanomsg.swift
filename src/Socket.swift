@@ -78,19 +78,9 @@ public class Socket {
         }
     }
 
-    // REmove an endpoint from the socket.
+    // Remove an endpoint from the socket.
     func shutdown() {
         nn_shutdown(socketid, eid)
-    }
-
-    // Set a socket option.
-    func setsockopt(level: Int, option: Int, optval: AnyObject) {
-        // TODO
-    }
-
-    // Retrieve a socket option.
-    func getsockopt(level: Int, option: Int, optval: AnyObject) {
-        // TODO
     }
 
     // Send a message.
