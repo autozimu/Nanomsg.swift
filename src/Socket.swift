@@ -62,6 +62,7 @@ public class Socket {
         shutdown()
     }
 
+    // Add a local endpoint to the socket.
     func bind(addr: String) {
         addr.withCString { caddr in
             eid = nn_bind(socketid, caddr)
@@ -69,6 +70,7 @@ public class Socket {
         }
     }
 
+    // Add a remote endpoint to the socket.
     func connect(addr: String) {
         addr.withCString { caddr in
             eid = nn_connect(socketid, caddr)
@@ -76,29 +78,38 @@ public class Socket {
         }
     }
 
+    // REmove an endpoint from the socket.
     func shutdown() {
         nn_shutdown(socketid, eid)
     }
 
+    // Set a socket option.
     func setsockopt(level: Int, option: Int, optval: AnyObject) {
         // TODO
     }
 
+    // Retrieve a socket option.
     func getsockopt(level: Int, option: Int, optval: AnyObject) {
         // TODO
     }
 
-    func send(msg: String, flags: CInt = 0) -> Int {
-        let sz_msg = msg.characters.count + 1
-        var length = 0
-        msg.withCString { cmsg in
-            let bytes = nn_send(socketid, cmsg, sz_msg, flags)
-            length = Int(bytes)
-        }
-        assert(length == sz_msg)
-        return length
+    // Send a message.
+    func send(msg: [UInt8], flags: CInt = 0) -> CInt {
+        let msgSize = msg.count
+
+        let sentLen = nn_send(socketid, msg, msgSize, flags)
+
+        assert(Int(sentLen) == msgSize)
+        return sentLen
     }
 
+    // Send a string.
+    func send(msg: String, flags: CInt = 0) -> CInt {
+        let bytes = [UInt8](msg.utf8)
+        return send(msg: bytes, flags: flags)
+    }
+
+    // Receive a message.
     func recv(flags: CInt = 0) -> String? {
         let buffsize = 100
         var buff = [CChar](repeating: 0, count: buffsize)
@@ -117,11 +128,13 @@ public class Socket {
         // return str
     }
 
-    func nn_sendmsg() {
+    // Fine-grained alternative to send.
+    func sendmsg() {
         // TODO
     }
 
-    func nn_redvmsg() {
+    // Find-grained alternative to recv.
+    func recvmsg() {
         // TODO
     }
 }
