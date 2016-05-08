@@ -1,5 +1,6 @@
 // options
 let socket = Socket(domain: .AF_SP, proto: .PULL)
+
 assert(socket.linger == 1000)
 assert(socket.sndbuf == 131072)
 assert(socket.rcvbuf == 131072)
