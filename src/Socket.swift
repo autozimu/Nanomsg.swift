@@ -50,7 +50,7 @@ public class Socket {
     var socketid: CInt = -1
     var eid: CInt = -1
 
-    init(domain: Domain, proto: Proto) {
+    init(_ domain: Domain, _ proto: Proto) {
         self.domain = domain
         self.proto = proto
 
@@ -63,7 +63,7 @@ public class Socket {
     }
 
     // Add a local endpoint to the socket.
-    func bind(addr: String) {
+    func bind(_ addr: String) {
         addr.withCString { caddr in
             eid = nn_bind(socketid, caddr)
             assert(eid >= 0)
@@ -71,7 +71,7 @@ public class Socket {
     }
 
     // Add a remote endpoint to the socket.
-    func connect(addr: String) {
+    func connect(_ addr: String) {
         addr.withCString { caddr in
             eid = nn_connect(socketid, caddr)
             assert(eid >= 0)
@@ -84,7 +84,7 @@ public class Socket {
     }
 
     // Send a message.
-    func send(msg: [UInt8], flags: CInt = 0) -> CInt {
+    func send(_ msg: [UInt8], flags: CInt = 0) -> CInt {
         let sz_msg = msg.count
         var nSent: CInt = 0
 
@@ -95,7 +95,7 @@ public class Socket {
     }
 
     // Send a string.
-    func send(msg: String, flags: CInt = 0) -> CInt {
+    func send(_ msg: String, flags: CInt = 0) -> CInt {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
 
@@ -106,7 +106,7 @@ public class Socket {
     }
 
     // Receive a message.
-    func recv(flags: CInt = 0) -> UnsafeMutableBufferPointer<UInt8> {
+    func recv(flags: CInt = 0) -> UnsafeMutableBufferPointer<UInt8>? {
         let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
         pp.pointee = p;
@@ -114,12 +114,16 @@ public class Socket {
         // 4294967295 = 2 ^ 32 - 1
         let nRecv = nn_recv(socketid, p, 4294967295, flags)
         // print("RECEIVED: \(nRecv) bytes")
-        return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
+        if nRecv > 0 {
+            return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
+        } else {
+            return nil
+        }
     }
 
     // Receive a string.
     func recvstr(flags: CInt = 0) -> String? {
-        if let cstr = recv(flags: flags).baseAddress {
+        if let cstr = recv(flags: flags)?.baseAddress {
             return String(cString: UnsafePointer<CChar>(cstr))
         } else {
             return nil
