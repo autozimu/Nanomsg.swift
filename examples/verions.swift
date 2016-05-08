@@ -1,4 +1,4 @@
-
-print(VERSION_CURRENT)
-print(VERSION_REVISION)
-print(VERSION_AGE)
+// Versions
+assert(VERSION_CURRENT == 4)
+assert(VERSION_REVISION == 0)
+assert(VERSION_AGE == 0)
