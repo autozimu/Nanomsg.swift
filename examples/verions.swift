@@ -1,0 +1,4 @@
+
+print(VERSION_CURRENT)
+print(VERSION_REVISION)
+print(VERSION_AGE)
