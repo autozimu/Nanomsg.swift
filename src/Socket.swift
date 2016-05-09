@@ -59,6 +59,10 @@ public class Socket {
         }
     }
 
+    convenience init(_ proto: Proto) throws {
+        try self.init(.AF_SP, proto)
+    }
+
     deinit {
         do {
             try close()
