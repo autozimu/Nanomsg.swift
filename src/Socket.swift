@@ -1,50 +1,6 @@
 import CNanomsg
 
 public class Socket {
-    enum Domain: CInt {
-        case AF_SP = 1
-        case AF_SP_RAW = 2
-    }
-
-    enum Proto: CInt {
-        // bus.h
-        case BUS = 112
-
-        // inproc.h
-        case INPROC = -1
-
-        // pair.h
-        case PAIR = 16
-
-        // pipeline.h
-        case PUSH = 80
-        case PULL = 81
-
-        // pubsub.h
-        case PUB = 32
-        case SUB = 33
-
-        // reqrep.h
-        case REQ = 48
-        case REP = 49
-
-        // survey.h
-        case SURVEYOR = 98
-        case RESPONDENT = 99
-
-        // tcp.h
-        case TCP = -3
-        case TCP_NODELAY = 1
-
-        // tcpmux.h
-        case TCPMUX = -5
-        // not unique raw value?
-        // case TCPMUX_NODELAY = 1
-
-        // ws.h
-        case WS = -4
-    }
-
     let domain: Domain
     let proto: Proto
     var socketid: CInt = -1
@@ -114,11 +70,11 @@ public class Socket {
     }
 
     // Send a message.
-    func send(_ msg: [UInt8], flags: CInt = 0) throws -> CInt {
+    func send(_ msg: [UInt8], flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.count
         var nSent: CInt = 0
 
-        nSent = nn_send(socketid, msg, sz_msg, flags)
+        nSent = nn_send(socketid, msg, sz_msg, flags.rawValue)
         if nSent < 0 {
             throw NanomsgError()
         }
@@ -127,11 +83,11 @@ public class Socket {
     }
 
     // Send a string.
-    func send(_ msg: String, flags: CInt = 0) throws -> CInt {
+    func send(_ msg: String, flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
 
-        nSent = nn_send(socketid, msg, sz_msg, flags)
+        nSent = nn_send(socketid, msg, sz_msg, flags.rawValue)
         if nSent < 0 {
             throw NanomsgError()
         }
@@ -140,11 +96,11 @@ public class Socket {
     }
 
     // Receive a message.
-    func recv(flags: CInt = 0) throws -> UnsafeMutableBufferPointer<UInt8> {
+    func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
         let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
         pp.pointee = p;
-        let nRecv = nn_recv(socketid, p, NN_MSG, flags)
+        let nRecv = nn_recv(socketid, p, NN_MSG, flags.rawValue)
         if nRecv < 0 {
             throw NanomsgError()
         }
@@ -153,7 +109,7 @@ public class Socket {
     }
 
     // Receive a string.
-    func recvstr(flags: CInt = 0) throws -> String? {
+    func recvstr(flags: Flags = .None) throws -> String? {
         if let cstr = try recv(flags: flags).baseAddress {
             return String(cString: UnsafePointer<CChar>(cstr))
         } else {
