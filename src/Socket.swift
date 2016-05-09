@@ -5,6 +5,13 @@ public class Socket {
     let proto: Proto
     var socketid: CInt = -1
 
+    /**
+     Create an SP socket.
+
+     - parameters:
+         - domain: domain of the socket.
+         - proto: type of the socket.
+     */
     public init(_ domain: Domain, _ proto: Proto) throws {
         self.domain = domain
         self.proto = proto
@@ -15,6 +22,11 @@ public class Socket {
         }
     }
 
+    /**
+     Create an SP socket.
+
+     - parameter proto: type of the socket.
+     */
     public convenience init(_ proto: Proto) throws {
         try self.init(.AF_SP, proto)
     }
@@ -29,7 +41,9 @@ public class Socket {
         }
     }
 
-    // Close an SP Socket
+    /**
+     Close an SP Socket.
+     */
     public func close() throws {
         let ret = nn_close(socketid)
         if ret < 0 {
@@ -37,7 +51,12 @@ public class Socket {
         }
     }
 
-    // Add a local endpoint to the socket.
+    /**
+     Add a local endpoint to the socket.
+
+     - parameter addr: address to bind to.
+     - returns: endpoint id.
+     */
     public func bind(_ addr: String) throws -> CInt {
         var eid: CInt = -1
         addr.withCString { caddr in
@@ -49,7 +68,12 @@ public class Socket {
         return eid
     }
 
-    // Add a remote endpoint to the socket.
+    /**
+     Add a remote endpoint to the socket.
+
+     - parameter addr: address to connect to.
+     - returns: endpoint id.
+     */
     public func connect(_ addr: String) throws -> CInt {
         var eid: CInt = -1
         addr.withCString { caddr in
@@ -61,7 +85,11 @@ public class Socket {
         return eid
     }
 
-    // Remove an endpoint from the socket.
+    /**
+     Remove an endpoint from the socket.
+
+     - parameter eid: ID of the endpoint to remove.
+     */
     public func shutdown(eid: CInt) throws {
         let ret = nn_shutdown(socketid, eid)
         if ret < 0 {
@@ -69,7 +97,14 @@ public class Socket {
         }
     }
 
-    // Send a message.
+    /**
+     Send a message.
+
+     - parameters:
+         - msg: content to send.
+         - flags: operation flags.
+     - returns: number of bytes sent.
+     */
     public func send(_ msg: [UInt8], flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.count
         var nSent: CInt = 0
@@ -82,7 +117,14 @@ public class Socket {
         return nSent
     }
 
-    // Send a string.
+    /**
+     Send a string.
+
+     - parameters:
+         - msg: string to send.
+         - flags: operation flags.
+     - returns: number of bytes sent.
+     */
     public func send(_ msg: String, flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
@@ -95,7 +137,12 @@ public class Socket {
         return nSent
     }
 
-    // Receive a message.
+    /**
+     Receive a message.
+
+     - parameter flags: operation flags.
+     - returns: received content.
+     */
     public func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
         let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
@@ -108,7 +155,12 @@ public class Socket {
         return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
     }
 
-    // Receive a string.
+    /**
+     Receive a string.
+
+     - parameter flags: operation flags.
+     - returns: received string.
+     */
     public func recvstr(flags: Flags = .None) throws -> String? {
         if let cstr = try recv(flags: flags).baseAddress {
             return String(cString: UnsafePointer<CChar>(cstr))
@@ -127,7 +179,11 @@ public class Socket {
         // TODO
     }
 
-    // Start a device.
+    /**
+     Start a device.
+
+     - parameter anotherSock: another socket.
+     */
     public func device(anotherSock: Socket) throws {
         let ret = nn_device(socketid, anotherSock.socketid)
         if ret < 0 {
@@ -135,7 +191,9 @@ public class Socket {
         }
     }
 
-    // Notify all sockets about process termination.
+    /**
+     Notify all sockets about process termination.
+     */
     public func term() {
         nn_term()
     }
