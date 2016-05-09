@@ -5,7 +5,7 @@ public class Socket {
     let proto: Proto
     var socketid: CInt = -1
 
-    init(_ domain: Domain, _ proto: Proto) throws {
+    public init(_ domain: Domain, _ proto: Proto) throws {
         self.domain = domain
         self.proto = proto
 
@@ -15,7 +15,7 @@ public class Socket {
         }
     }
 
-    convenience init(_ proto: Proto) throws {
+    public convenience init(_ proto: Proto) throws {
         try self.init(.AF_SP, proto)
     }
 
@@ -30,7 +30,7 @@ public class Socket {
     }
 
     // Close an SP Socket
-    func close() throws {
+    public func close() throws {
         let ret = nn_close(socketid)
         if ret < 0 {
             throw NanomsgError()
@@ -38,7 +38,7 @@ public class Socket {
     }
 
     // Add a local endpoint to the socket.
-    func bind(_ addr: String) throws -> CInt {
+    public func bind(_ addr: String) throws -> CInt {
         var eid: CInt = -1
         addr.withCString { caddr in
             eid = nn_bind(socketid, caddr)
@@ -50,7 +50,7 @@ public class Socket {
     }
 
     // Add a remote endpoint to the socket.
-    func connect(_ addr: String) throws -> CInt {
+    public func connect(_ addr: String) throws -> CInt {
         var eid: CInt = -1
         addr.withCString { caddr in
             eid = nn_connect(socketid, caddr)
@@ -62,7 +62,7 @@ public class Socket {
     }
 
     // Remove an endpoint from the socket.
-    func shutdown(eid: CInt) throws {
+    public func shutdown(eid: CInt) throws {
         let ret = nn_shutdown(socketid, eid)
         if ret < 0 {
             throw NanomsgError()
@@ -70,7 +70,7 @@ public class Socket {
     }
 
     // Send a message.
-    func send(_ msg: [UInt8], flags: Flags = .None) throws -> CInt {
+    public func send(_ msg: [UInt8], flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.count
         var nSent: CInt = 0
 
@@ -83,7 +83,7 @@ public class Socket {
     }
 
     // Send a string.
-    func send(_ msg: String, flags: Flags = .None) throws -> CInt {
+    public func send(_ msg: String, flags: Flags = .None) throws -> CInt {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
 
@@ -96,7 +96,7 @@ public class Socket {
     }
 
     // Receive a message.
-    func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
+    public func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
         let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
         pp.pointee = p;
@@ -109,7 +109,7 @@ public class Socket {
     }
 
     // Receive a string.
-    func recvstr(flags: Flags = .None) throws -> String? {
+    public func recvstr(flags: Flags = .None) throws -> String? {
         if let cstr = try recv(flags: flags).baseAddress {
             return String(cString: UnsafePointer<CChar>(cstr))
         } else {
@@ -128,7 +128,7 @@ public class Socket {
     }
 
     // Start a device.
-    func device(anotherSock: Socket) throws {
+    public func device(anotherSock: Socket) throws {
         let ret = nn_device(socketid, anotherSock.socketid)
         if ret < 0 {
             throw NanomsgError()
@@ -136,7 +136,7 @@ public class Socket {
     }
 
     // Notify all sockets about process termination.
-    func term() {
+    public func term() {
         nn_term()
     }
 }
