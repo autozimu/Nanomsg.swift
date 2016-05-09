@@ -55,15 +55,15 @@ public class Socket {
 
         socketid = nn_socket(domain.rawValue, proto.rawValue)
         if socketid < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
     }
 
     deinit {
         do {
             try close()
-        } catch NanomsgError.Err(let msg) {
-            print(msg)
+        } catch NanomsgError.Err(let errno, let msg) {
+            print(errno, msg)
         } catch {
             print("Unknown error occured")
         }
@@ -73,7 +73,7 @@ public class Socket {
     func close() throws {
         let ret = nn_close(socketid)
         if ret < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
     }
 
@@ -84,7 +84,7 @@ public class Socket {
             eid = nn_bind(socketid, caddr)
         }
         if eid < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
         return eid
     }
@@ -96,7 +96,7 @@ public class Socket {
             eid = nn_connect(socketid, caddr)
         }
         if eid < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
         return eid
     }
@@ -105,7 +105,7 @@ public class Socket {
     func shutdown(eid: CInt) throws {
         let ret = nn_shutdown(socketid, eid)
         if ret < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
     }
 
@@ -116,7 +116,7 @@ public class Socket {
 
         nSent = nn_send(socketid, msg, sz_msg, flags)
         if nSent < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
 
         return nSent
@@ -129,7 +129,7 @@ public class Socket {
 
         nSent = nn_send(socketid, msg, sz_msg, flags)
         if nSent < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
 
         return nSent
@@ -142,7 +142,7 @@ public class Socket {
         pp.pointee = p;
         let nRecv = nn_recv(socketid, p, NN_MSG, flags)
         if nRecv < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
 
         return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
@@ -171,7 +171,7 @@ public class Socket {
     func device(anotherSock: Socket) throws {
         let ret = nn_device(socketid, anotherSock.socketid)
         if ret < 0 {
-            throw NanomsgError.Err(msg: strerror)
+            throw NanomsgError()
         }
     }
 
