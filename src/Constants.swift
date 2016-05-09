@@ -3,3 +3,6 @@ import CNanomsg
 public let VERSION_CURRENT = NN_VERSION_CURRENT
 public let VERSION_REVISION = NN_VERSION_REVISION
 public let VERSION_AGE = NN_VERSION_AGE
+
+// NN_MSG = ((size_t) - 1)
+let NN_MSG = 4294967295

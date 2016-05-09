@@ -140,9 +140,7 @@ public class Socket {
         let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
         pp.pointee = p;
-        // NN_MSG = ((size_t) - 1)
-        // 4294967295 = 2 ^ 32 - 1
-        let nRecv = nn_recv(socketid, p, 4294967295, flags)
+        let nRecv = nn_recv(socketid, p, NN_MSG, flags)
         if nRecv < 0 {
             throw NanomsgError.Err(msg: strerror)
         }
