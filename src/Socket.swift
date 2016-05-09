@@ -168,5 +168,18 @@ public class Socket {
     func recvmsg() {
         // TODO
     }
+
+    // Start a device.
+    func device(anotherSock: Socket) throws {
+        let ret = nn_device(socketid, anotherSock.socketid)
+        if ret < 0 {
+            throw NanomsgError.Err(msg: strerror)
+        }
+    }
+
+    // Notify all sockets about process termination.
+    func term() {
+        nn_term()
+    }
 }
 
