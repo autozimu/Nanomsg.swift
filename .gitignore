@@ -6,3 +6,5 @@ main
 Packages
 CNanomsg
 .build
+Nanomsg.xcodeproj
+build

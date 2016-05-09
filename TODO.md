@@ -4,3 +4,4 @@
   swift package manager.
 - CNanomsg/modulemap header include should not be hard-coded. As of writing,
   Swift package manager does not support this yet.
+- Formatted doc.
