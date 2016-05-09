@@ -102,8 +102,11 @@ public class Socket {
     }
 
     // Remove an endpoint from the socket.
-    func shutdown(eid: CInt) {
-        nn_shutdown(socketid, eid)
+    func shutdown(eid: CInt) throws {
+        let ret = nn_shutdown(socketid, eid)
+        if ret < 0 {
+            throw NanomsgError.Err(msg: strerror)
+        }
     }
 
     // Send a message.
@@ -140,7 +143,6 @@ public class Socket {
         // NN_MSG = ((size_t) - 1)
         // 4294967295 = 2 ^ 32 - 1
         let nRecv = nn_recv(socketid, p, 4294967295, flags)
-        // print("RECEIVED: \(nRecv) bytes")
         if nRecv < 0 {
             throw NanomsgError.Err(msg: strerror)
         }
