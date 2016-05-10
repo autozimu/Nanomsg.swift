@@ -1,115 +1,92 @@
 import CNanomsg
 
-enum OptLevel: CInt {
-    case SOL = 0
-}
-
-enum OptEnum: CInt {
-    case LINGER = 1
-    case SNDBUF = 2
-    case RCVBUF = 3
-    case SNDTIMEO = 4
-    case RCVTIMEO = 5
-    case RECONNECT_IVL = 6
-    case RECONNECT_IVL_MAX = 7
-    case SNDPRIO = 8
-    case RCVPRIO = 9
-    case SNDFD = 10
-    case RCVFD = 11
-    case DOMAIN = 12
-    case PROTOCOL = 13
-    case IPV4ONLY = 14
-    case SOCKET_NAME = 15
-    case RCVMAXSIZE = 16
-}
-
 public extension Socket {
-    internal func getopt(_ opt: OptEnum) -> CInt {
+    /** Get socket option of type Int. */
+    internal func getOpt(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> CInt {
         var value: CInt = -1
         var size = sizeof(CInt)
-        nn_getsockopt(socketid,
-            OptLevel.SOL.rawValue, opt.rawValue,
-            &value, &size)
+        nn_getsockopt(socketid, level, opt, &value, &size)
         return value
     }
+    
+    /** Get generic socket option of type String. */
+    internal func getOptStr(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> String {
+        var sz = 100
+        let value = UnsafeMutablePointer<CChar>(allocatingCapacity: sz)
+        nn_getsockopt(socketid, level, opt, value, &sz)
+        return String(cString: value)
+    }
 
-    internal func setopt(_ opt: OptEnum, _ newValue: CInt) {
+    /** Set socket option of type Int. */
+    internal func setOpt(_ opt: CInt, _ newValue: CInt, level: CInt = NN_SOL_SOCKET) {
         var newValue = newValue
-        nn_setsockopt(socketid,
-            OptLevel.SOL.rawValue, opt.rawValue,
-            &newValue, sizeof(CInt))
+        nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt))
+    }
+    
+    /** Set socket option of String type. */
+    internal func setOptStr(_ opt: CInt, _ newValue: String, level: CInt = NN_SOL_SOCKET) {
+        let sz = newValue.characters.count + 1
+        nn_setsockopt(socketid, level, opt, newValue, sz)
     }
 
     public var linger: CInt {
-        get { return getopt(OptEnum.LINGER) }
-        set { setopt(OptEnum.LINGER, newValue) }
+        get { return getOpt(NN_LINGER) }
+        set { setOpt(NN_LINGER, newValue) }
     }
 
     public var sndbuf: CInt {
-        get { return getopt(OptEnum.SNDBUF)  }
-        set { setopt(OptEnum.SNDBUF, newValue) }
+        get { return getOpt(NN_SNDBUF)  }
+        set { setOpt(NN_SNDBUF, newValue) }
     }
 
     public var rcvbuf: CInt {
-        get { return getopt(OptEnum.RCVBUF) }
-        set { setopt(OptEnum.RCVBUF, newValue) }
+        get { return getOpt(NN_RCVBUF) }
+        set { setOpt(NN_RCVBUF, newValue) }
     }
 
     public var rcvmaxsize: CInt {
-        get { return getopt(OptEnum.RCVMAXSIZE) }
-        set { setopt(OptEnum.RCVMAXSIZE, newValue) }
+        get { return getOpt(NN_RCVMAXSIZE) }
+        set { setOpt(NN_RCVMAXSIZE, newValue) }
     }
 
     public var sndtimeo: CInt {
-        get { return getopt(OptEnum.SNDTIMEO) }
-        set { setopt(OptEnum.SNDTIMEO, newValue) }
+        get { return getOpt(NN_SNDTIMEO) }
+        set { setOpt(NN_SNDTIMEO, newValue) }
     }
 
     public var rcvtimeo: CInt {
-        get { return getopt(OptEnum.RCVTIMEO) }
-        set { setopt(OptEnum.RCVTIMEO, newValue) }
+        get { return getOpt(NN_RCVTIMEO) }
+        set { setOpt(NN_RCVTIMEO, newValue) }
     }
 
     public var reconnect_ivl: CInt {
-        get { return getopt(OptEnum.RECONNECT_IVL) }
-        set { setopt(OptEnum.RECONNECT_IVL, newValue) }
+        get { return getOpt(NN_RECONNECT_IVL) }
+        set { setOpt(NN_RECONNECT_IVL, newValue) }
     }
 
     public var reconnect_ivl_max: CInt {
-        get { return getopt(OptEnum.RECONNECT_IVL_MAX) }
-        set { setopt(OptEnum.RECONNECT_IVL_MAX, newValue) }
+        get { return getOpt(NN_RECONNECT_IVL_MAX) }
+        set { setOpt(NN_RECONNECT_IVL_MAX, newValue) }
     }
 
     public var sndprio: CInt {
-        get { return getopt(OptEnum.SNDPRIO) }
-        set { setopt(OptEnum.SNDPRIO, newValue) }
+        get { return getOpt(NN_SNDPRIO) }
+        set { setOpt(NN_SNDPRIO, newValue) }
     }
 
     public var rcvprio: CInt {
-        get { return getopt(OptEnum.RCVPRIO) }
-        set { setopt(OptEnum.RCVPRIO, newValue) }
+        get { return getOpt(NN_RCVPRIO) }
+        set { setOpt(NN_RCVPRIO, newValue) }
     }
 
     public var ipv4only: CInt {
-        get { return getopt(OptEnum.IPV4ONLY) }
-        set { setopt(OptEnum.IPV4ONLY, newValue) }
+        get { return getOpt(NN_IPV4ONLY) }
+        set { setOpt(NN_IPV4ONLY, newValue) }
     }
 
     public var name: String {
-        get {
-            var sz = 100
-            let value = UnsafeMutablePointer<CChar>(allocatingCapacity: sz)
-            nn_getsockopt(socketid,
-                OptLevel.SOL.rawValue, OptEnum.SOCKET_NAME.rawValue,
-                value, &sz)
-            return String(cString: value)
-        }
-        set {
-            let sz = newValue.characters.count + 1
-            nn_setsockopt(socketid,
-                OptLevel.SOL.rawValue, OptEnum.SOCKET_NAME.rawValue,
-                newValue, sz)
-        }
+        get { return getOptStr(NN_SOCKET_NAME) }
+        set { setOptStr(NN_SOCKET_NAME, newValue) }
     }
 
     // TODO
@@ -117,4 +94,24 @@ public extension Socket {
 
     // TODO
     // var rcvfd
+    
+    public var req_resend_ivl: CInt {
+        get { return getOpt(NN_REQ_RESEND_IVL, level: Proto.REQ.rawValue) }
+        set { setOpt(NN_REQ_RESEND_IVL, newValue, level: Proto.REQ.rawValue) }
+    }
+    
+    public var sub_subscribe: String {
+        get { return getOptStr(NN_SUB_SUBSCRIBE, level: Proto.SUB.rawValue) }
+        set { setOptStr(NN_SUB_SUBSCRIBE, newValue, level: Proto.SUB.rawValue) }
+    }
+    
+    public var sub_unsubscribe: String {
+        get { return getOptStr(NN_SUB_UNSUBSCRIBE, level: Proto.SUB.rawValue) }
+        set { setOptStr(NN_SUB_UNSUBSCRIBE, newValue, level: Proto.SUB.rawValue) }
+    }
+    
+    public var surveyor_deadline: CInt {
+        get { return getOpt(NN_SURVEYOR_DEADLINE, level: Proto.SURVEYOR.rawValue) }
+        set { setOpt(NN_SURVEYOR_DEADLINE, newValue, level: Proto.SURVEYOR.rawValue) }
+    }
 }
