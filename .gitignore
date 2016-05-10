@@ -8,3 +8,4 @@ CNanomsg
 .build
 Nanomsg.xcodeproj
 build
+docs
