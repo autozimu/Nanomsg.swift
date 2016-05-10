@@ -5,7 +5,10 @@ public extension Socket {
     internal func getOpt(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> CInt {
         var value: CInt = -1
         var size = sizeof(CInt)
-        nn_getsockopt(socketid, level, opt, &value, &size)
+        let ret = nn_getsockopt(socketid, level, opt, &value, &size)
+        if ret < 0 {
+            print("Error occured while getting option (level: \(level), opt: \(opt))")
+        }
         return value
     }
     
@@ -13,20 +16,29 @@ public extension Socket {
     internal func getOptStr(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> String {
         var sz = 100
         let value = UnsafeMutablePointer<CChar>(allocatingCapacity: sz)
-        nn_getsockopt(socketid, level, opt, value, &sz)
+        let ret = nn_getsockopt(socketid, level, opt, value, &sz)
+        if ret < 0 {
+            print("Error occured while getting option (level: \(level), opt: \(opt))")
+        }
         return String(cString: value)
     }
 
     /** Set socket option of type Int. */
     internal func setOpt(_ opt: CInt, _ newValue: CInt, level: CInt = NN_SOL_SOCKET) {
         var newValue = newValue
-        nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt))
+        let ret = nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt))
+        if ret < 0 {
+            print("Error occured while setting option (level: \(level), opt: \(opt))")
+        }
     }
     
     /** Set socket option of String type. */
     internal func setOptStr(_ opt: CInt, _ newValue: String, level: CInt = NN_SOL_SOCKET) {
         let sz = newValue.characters.count + 1
-        nn_setsockopt(socketid, level, opt, newValue, sz)
+        let ret = nn_setsockopt(socketid, level, opt, newValue, sz)
+        if ret < 0 {
+            print("Error occured while setting option (level: \(level), opt: \(opt))")
+        }
     }
 
     public var linger: CInt {
