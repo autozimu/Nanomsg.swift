@@ -7,7 +7,7 @@ public extension Socket {
         var size = sizeof(CInt)
         let ret = nn_getsockopt(socketid, level, opt, &value, &size)
         if ret < 0 {
-            print("Error occured while getting option (level: \(level), opt: \(opt))")
+            print("Error occured while getting option (level: \(level), opt: \(opt)): \(error)")
         }
         return value
     }
@@ -18,7 +18,7 @@ public extension Socket {
         let value = UnsafeMutablePointer<CChar>(allocatingCapacity: sz)
         let ret = nn_getsockopt(socketid, level, opt, value, &sz)
         if ret < 0 {
-            print("Error occured while getting option (level: \(level), opt: \(opt))")
+            print("Error occured while getting option (level: \(level), opt: \(opt)): \(error)")
         }
         return String(cString: value)
     }
@@ -28,7 +28,7 @@ public extension Socket {
         var newValue = newValue
         let ret = nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt))
         if ret < 0 {
-            print("Error occured while setting option (level: \(level), opt: \(opt))")
+            print("Error occured while setting option (level: \(level), opt: \(opt)): \(error)")
         }
     }
     
@@ -37,7 +37,7 @@ public extension Socket {
         let sz = newValue.characters.count + 1
         let ret = nn_setsockopt(socketid, level, opt, newValue, sz)
         if ret < 0 {
-            print("Error occured while setting option (level: \(level), opt: \(opt))")
+            print("Error occured while setting option (level: \(level), opt: \(opt)): \(error)")
         }
     }
 
