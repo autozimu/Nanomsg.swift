@@ -95,6 +95,8 @@ public extension Socket {
     // TODO
     // var rcvfd
     
+    // Specific protocol options.
+    
     public var req_resend_ivl: CInt {
         get { return getOpt(NN_REQ_RESEND_IVL, level: Proto.REQ.rawValue) }
         set { setOpt(NN_REQ_RESEND_IVL, newValue, level: Proto.REQ.rawValue) }
@@ -113,5 +115,22 @@ public extension Socket {
     public var surveyor_deadline: CInt {
         get { return getOpt(NN_SURVEYOR_DEADLINE, level: Proto.SURVEYOR.rawValue) }
         set { setOpt(NN_SURVEYOR_DEADLINE, newValue, level: Proto.SURVEYOR.rawValue) }
+    }
+    
+    // Specific transport options.
+    
+    public var tcp_nodelay: CInt {
+        get { return getOpt(NN_TCP_NODELAY, level: Transport.TCP.rawValue) }
+        set { setOpt(NN_TCP_NODELAY, newValue, level: Transport.TCP.rawValue) }
+    }
+    
+    public var tcpmux_nodelay: CInt {
+        get { return getOpt(NN_TCPMUX_NODELAY, level: Transport.TCPMUX.rawValue) }
+        set { setOpt(NN_TCPMUX_NODELAY, newValue, level: Transport.TCPMUX.rawValue) }
+    }
+    
+    public var ws_msg_type: CInt {
+        get { return getOpt(NN_WS_MSG_TYPE, level: Transport.WS.rawValue) }
+        set { setOpt(NN_WS_MSG_TYPE, newValue, level: Transport.WS.rawValue) }
     }
 }

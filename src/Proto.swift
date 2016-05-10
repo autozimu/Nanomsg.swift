@@ -32,18 +32,4 @@ public enum Proto: CInt {
     /** Message bus protocol. */
     case BUS = 112
 
-//    // inproc.h
-//    case INPROC = -1
-//
-//    // tcp.h
-//    case TCP = -3
-//    case TCP_NODELAY = 1
-//
-//    // tcpmux.h
-//    case TCPMUX = -5
-//    // not unique raw value?
-//    // case TCPMUX_NODELAY = 1
-//
-//    // ws.h
-//    case WS = -4
 }
