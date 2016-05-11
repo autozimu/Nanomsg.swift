@@ -2,8 +2,8 @@ Swift binding for [nanomsg](http://nanomsg.org/)
 
 ### Usage
 
-If [Swift Package Manager](https://github.com/apple/swift-package-manager),
-add this package as dependency in `Package.swift`,
+If [Swift Package Manager](https://github.com/apple/swift-package-manager) is
+used, add this package as a dependency in `Package.swift`,
 
     .Package(url: "https://github.com/autozimu/Nanomsg-swift.git", majorVersion: 0)
 
