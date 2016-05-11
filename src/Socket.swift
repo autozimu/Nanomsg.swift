@@ -1,5 +1,6 @@
 import CNanomsg
 
+/** SP socket */
 public class Socket {
     let domain: Domain
     let proto: Proto

@@ -1,3 +1,4 @@
+/** Transport machanism */
 enum Transport: CInt {
     // inproc.h
     case INPROC = -1
