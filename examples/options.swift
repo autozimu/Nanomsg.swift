@@ -1,5 +1,4 @@
-// options
-let socket = Socket(domain: .AF_SP, proto: .PULL)
+let socket = try Socket(.PULL)
 
 assert(socket.linger == 1000)
 assert(socket.sndbuf == 131072)
@@ -11,5 +10,5 @@ assert(socket.reconnect_ivl == 100)
 assert(socket.reconnect_ivl_max == 0)
 assert(socket.sndprio == 8)
 assert(socket.rcvprio == 8)
-assert(socket.ipv4only == 1)
+assert(socket.ipv4only == true)
 assert(socket.name == "0")

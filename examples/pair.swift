@@ -1,7 +1,8 @@
+// import exit() and sleep()
 #if os(Linux)
-    import GLibc
+import GLibc
 #else
-    import Darwin
+import Darwin
 #endif
 
 guard Process.argc == 3 && (Process.arguments[1] ==  "node0" || Process.arguments[1] == "node1") else {
@@ -9,25 +10,32 @@ guard Process.argc == 3 && (Process.arguments[1] ==  "node0" || Process.argument
     exit(1)
 }
 
-let sock = Socket(.AF_SP, .PAIR)
+let sock = try Socket(.PAIR)
 var node0 = false
 var node1 = false
 if Process.arguments[1] == "node0" {
     node0 = true
-    sock.bind(Process.arguments[2])
+    try sock.bind(Process.arguments[2])
 } else {
     node1 = true
-    sock.connect(Process.arguments[2])
+    try sock.connect(Process.arguments[2])
 }
 
 sock.rcvtimeo = 100
 
 while true {
-    print(sock.recvstr())
+    do {
+        try print(sock.recvstr())
+    }
+    catch NanomsgError.Err(let errno, _) {
+        // timeout
+        assert(errno == 60)
+    }
     sleep(1)
     if node0 {
-        sock.send("node0")
+        try sock.send("node0")
     } else {
-        sock.send("node1")
+        try sock.send("node1")
     }
 }
+

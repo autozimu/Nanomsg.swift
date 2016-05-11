@@ -1,7 +1,8 @@
+// import exit()
 #if os(Linux)
-    import GLibc
+import GLibc
 #else
-    import Darwin
+import Darwin
 #endif
 
 guard (Process.argc == 3 && Process.arguments[1] ==  "node0")
@@ -20,20 +21,20 @@ if Process.arguments[1] == "node0" {
 
 
 if node0 {
-    let sock = Socket(.AF_SP, .PULL)
-    sock.bind(Process.arguments[2])
+    let sock = try Socket(.PULL)
+    try sock.bind(Process.arguments[2])
 
     while true {
-        if let msg = sock.recvstr() {
+        if let msg = try sock.recvstr() {
             print("RECEIVED: " + msg)
         }
     }
 
 } else {
-    let sock = Socket(.AF_SP, .PUSH)
-    sock.connect(Process.arguments[2])
+    let sock = try Socket(.PUSH)
+    try sock.connect(Process.arguments[2])
 
     let msg = Process.arguments[3]
     print("SENDING: " + msg)
-    sock.send(msg)
+    try sock.send(msg)
 }
