@@ -1,9 +1,4 @@
-// import exit()
-#if os(Linux)
-import GLibc
-#else
-import Darwin
-#endif
+import os
 
 guard (Process.argc == 3 && Process.arguments[1] ==  "node0")
         || (Process.argc == 4 && Process.arguments[1] == "node1") else {

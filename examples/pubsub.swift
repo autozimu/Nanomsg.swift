@@ -1,9 +1,4 @@
-// import exit() and sleep()
-#if os(Linux)
-import GLibc
-#else
-import Darwin
-#endif
+import os
 
 guard Process.argc > 1
         && ((Process.arguments[1] == "server" && Process.argc == 3)
