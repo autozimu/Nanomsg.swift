@@ -2,7 +2,7 @@ all:
 	swift build
 
 doc:
-	swift build --generate-xcodeproj
+	swift package generate-xcodeproj
 	jazzy --clean \
 		--author "Junfeng (Jeff) Li" \
 		--author_url https://github.com/autozimu \
