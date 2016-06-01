@@ -224,16 +224,6 @@ public extension Socket {
     }
 
     /**
-    This option, when set to `true`, disables Nagle's algorithm. It also
-    disables delaying of TCP acknowledgements. Using this option improves
-    latency at the expense of throughput. Default value is `false`.
-    */
-    public var tcpmux_nodelay: Bool {
-        get { return getOpt(NN_TCPMUX_NODELAY, level: Transport.TCPMUX.rawValue) == 1 }
-        set { setOpt(NN_TCPMUX_NODELAY, newValue == true ? 1 : 0, level: Transport.TCPMUX.rawValue) }
-    }
-
-    /**
     This option may be set to `WSMsgType.Text` or `WSMsgType.Binary`. The
     value of this determines whether data messages are sent as WebSocket text
     frames, or binary frames, per RFC 6455. Text frames should contain only

@@ -11,7 +11,4 @@ enum Transport: CInt {
 
     // ws.h
     case WS = -4
-
-    // tcpmux.h
-    case TCPMUX = -5
 }
