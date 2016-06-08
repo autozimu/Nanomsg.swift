@@ -29,4 +29,4 @@ More examples could be found in examples dir.
 
 ## Documentation
 
-<http://autozimu.github.io/Nanomsg-swift/>
+<https://autozimu.github.io/Nanomsg.swift/>
