@@ -13,7 +13,7 @@ public class Socket {
          - domain: domain of the socket.
          - proto: type of the socket.
      */
-    public init(_ domain: Domain, _ proto: Proto) throws {
+    public init(domain: Domain, proto: Proto) throws {
         self.domain = domain
         self.proto = proto
 
@@ -29,7 +29,7 @@ public class Socket {
      - parameter proto: type of the socket.
      */
     public convenience init(_ proto: Proto) throws {
-        try self.init(.AF_SP, proto)
+        try self.init(domain: .AF_SP, proto: proto)
     }
 
     deinit {
