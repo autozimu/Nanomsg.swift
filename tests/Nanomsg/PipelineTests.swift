@@ -12,9 +12,8 @@ class PipelineTests: XCTestCase {
         _ = try! pull.bind(addr)
         
         let str = "dadada"
-        _ = try! push.send(str)
         
-        let msg = try! pull.recvstr()
-        XCTAssertEqual(msg, str)
+        XCTAssertEqual(try! push.send(str), 7)
+        XCTAssertEqual(try! pull.recvstr(), str)
     }
 }
