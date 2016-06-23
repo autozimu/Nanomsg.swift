@@ -4,7 +4,7 @@ public extension Socket {
     /** Get socket option of type Int. */
     internal func getOpt(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> CInt {
         var value: CInt = -1
-        var size = sizeof(CInt)
+        var size = sizeof(CInt.self)
         let ret = nn_getsockopt(socketid, level, opt, &value, &size)
         if ret < 0 {
             print("Error occured while getting option (level: \(level), opt: \(opt)): \(error)")
@@ -26,7 +26,7 @@ public extension Socket {
     /** Set socket option of type Int. */
     internal func setOpt(_ opt: CInt, _ newValue: CInt, level: CInt = NN_SOL_SOCKET) {
         var newValue = newValue
-        let ret = nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt))
+        let ret = nn_setsockopt(socketid, level, opt, &newValue, sizeof(CInt.self))
         if ret < 0 {
             print("Error occured while setting option (level: \(level), opt: \(opt)): \(error)")
         }
