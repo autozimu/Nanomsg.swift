@@ -2,14 +2,14 @@
 
 set -euf -o pipefail
 
-if [[ ! -d .nanomsg ]]; then
+if [[ ! -d $HOME/.nanomsg ]]; then
     git clone https://github.com/nanomsg/nanomsg.git ~/.nanomsg
     cd ~/.nanomsg
     git checkout 1.0.0
     mkdir build
     cd build
     cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-    cmake -- build .
+    cmake --build .
 fi
 
 cd ~/.nanomsg/build
