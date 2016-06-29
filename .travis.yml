@@ -12,3 +12,4 @@ cache:
     - $HOME/.swiftenv
 script:
   - swift build && swift test
+
