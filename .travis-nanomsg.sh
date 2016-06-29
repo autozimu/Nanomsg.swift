@@ -14,4 +14,7 @@ fi
 
 cd ~/.nanomsg/build
 sudo cmake --build . --target install
-sudo ldconfig
+
+if [[ $TRAVIS_OS_NAME == "linux" ]]; then
+    sudo ldconfig
+fi
