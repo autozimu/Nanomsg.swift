@@ -11,7 +11,7 @@ install:
 cache:
   directories:
     - $HOME/.swiftenv
-    # - $HOME/.nanomsg
+    - $HOME/.nanomsg
 script:
   - swift build && swift test
 
