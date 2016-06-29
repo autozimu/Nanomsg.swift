@@ -58,7 +58,7 @@ public class Socket {
      - parameter addr: address to bind to.
      - returns: endpoint id.
      */
-    public func bind(_ addr: String) throws -> CInt {
+    public func bind(_ addr: String) throws -> Int {
         var eid: CInt = -1
         addr.withCString { caddr in
             eid = nn_bind(socketid, caddr)
@@ -66,7 +66,7 @@ public class Socket {
         if eid < 0 {
             throw NanomsgError()
         }
-        return eid
+        return Int(eid)
     }
 
     /**
@@ -75,7 +75,7 @@ public class Socket {
      - parameter addr: address to connect to.
      - returns: endpoint id.
      */
-    public func connect(_ addr: String) throws -> CInt {
+    public func connect(_ addr: String) throws -> Int {
         var eid: CInt = -1
         addr.withCString { caddr in
             eid = nn_connect(socketid, caddr)
@@ -83,7 +83,7 @@ public class Socket {
         if eid < 0 {
             throw NanomsgError()
         }
-        return eid
+        return Int(eid)
     }
 
     /**
@@ -106,7 +106,7 @@ public class Socket {
          - flags: operation flags.
      - returns: number of bytes sent.
      */
-    public func send(_ msg: [UInt8], flags: Flags = .None) throws -> CInt {
+    public func send(_ msg: [UInt8], flags: Flags = .None) throws -> Int {
         let sz_msg = msg.count
         var nSent: CInt = 0
 
@@ -115,7 +115,7 @@ public class Socket {
             throw NanomsgError()
         }
 
-        return nSent
+        return Int(nSent)
     }
 
     /**
@@ -126,7 +126,7 @@ public class Socket {
          - flags: operation flags.
      - returns: number of bytes sent.
      */
-    public func send(_ msg: String, flags: Flags = .None) throws -> CInt {
+    public func send(_ msg: String, flags: Flags = .None) throws -> Int {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
 
@@ -135,7 +135,7 @@ public class Socket {
             throw NanomsgError()
         }
 
-        return nSent
+        return Int(nSent)
     }
 
     /**
@@ -199,4 +199,3 @@ public class Socket {
         nn_term()
     }
 }
-

@@ -1,5 +1,10 @@
-all:
+all: build
+
+build:
 	swift build
+
+test: build
+	swift test
 
 doc:
 	swift package generate-xcodeproj
