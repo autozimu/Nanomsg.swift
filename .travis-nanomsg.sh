@@ -2,7 +2,8 @@
 
 set -euf -o pipefail
 
-if [[ ! -d $HOME/.nanomsg ]]; then
+if [[ ! -d $HOME/.nanomsg/build ]]; then
+    rm -rf $HOME/.nanomsg
     git clone https://github.com/nanomsg/nanomsg.git $HOME/.nanomsg
     cd $HOME/.nanomsg
     git checkout 1.0.0
