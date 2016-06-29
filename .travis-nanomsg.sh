@@ -8,7 +8,7 @@ if [[ ! -d .nanomsg ]]; then
     git checkout 1.0.0
     mkdir build
     cd build
-    cmake ..
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
     cmake -- build .
 fi
 
