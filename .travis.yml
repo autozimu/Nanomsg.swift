@@ -16,5 +16,3 @@ cache:
     - $HOME/.nanomsg
 script:
   - swift build && swift test
-
-
