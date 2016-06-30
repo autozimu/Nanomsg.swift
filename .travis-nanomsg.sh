@@ -2,10 +2,6 @@
 
 set -euf -o pipefail
 
-if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-    brew install cmake
-fi
-
 if [[ ! -d $HOME/.nanomsg/build ]]; then
     rm -rf $HOME/.nanomsg
     git clone https://github.com/nanomsg/nanomsg.git $HOME/.nanomsg
@@ -19,7 +15,4 @@ fi
 
 cd $HOME/.nanomsg/build
 sudo cmake --build . --target install
-
-if [[ $TRAVIS_OS_NAME == "linux" ]]; then
-    sudo ldconfig
-fi
+sudo ldconfig

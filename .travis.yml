@@ -1,10 +1,7 @@
-os:
-  - linux
-  - osx
+os: linux
 language: generic # default to ruby
 sudo: required
 dist: trusty
-osx_image: xcode8
 env:
   - SWIFT_VERSION=swift-DEVELOPMENT-SNAPSHOT-2016-06-20-a
 install:
