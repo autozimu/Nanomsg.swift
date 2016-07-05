@@ -2,6 +2,11 @@
 
 set -euf -o pipefail
 
+if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    brew install nanomsg
+    exit 0
+fi
+
 if [[ ! -d $HOME/.nanomsg/build ]]; then
     rm -rf $HOME/.nanomsg
     git clone https://github.com/nanomsg/nanomsg.git $HOME/.nanomsg
@@ -9,8 +14,10 @@ if [[ ! -d $HOME/.nanomsg/build ]]; then
     git checkout 1.0.0
     mkdir build
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+    cmake ..
     cmake --build .
+else
+    brew install nanomsg
 fi
 
 cd $HOME/.nanomsg/build
