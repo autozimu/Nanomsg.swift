@@ -17,8 +17,6 @@ if [[ ! -d $HOME/.nanomsg/build ]]; then
     cd build
     cmake ..
     cmake --build .
-else
-    brew install nanomsg
 fi
 
 cd $HOME/.nanomsg/build
