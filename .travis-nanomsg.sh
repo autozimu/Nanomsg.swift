@@ -3,6 +3,7 @@
 set -euf -o pipefail
 
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    brew update
     brew install nanomsg
     exit 0
 fi
