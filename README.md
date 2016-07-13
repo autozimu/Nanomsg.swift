@@ -1,4 +1,5 @@
 # Swift binding for [nanomsg](http://nanomsg.org/)
+[![Build Status](https://travis-ci.org/autozimu/Nanomsg.swift.svg?branch=master)](https://travis-ci.org/autozimu/Nanomsg.swift)
 
 ## Usage
 
