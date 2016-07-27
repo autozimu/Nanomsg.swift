@@ -12,6 +12,10 @@ class SurveyTests: XCTestCase {
         let respondent = try! Socket(.RESPONDENT)
         _ = try! respondent.connect(addr)
         
+#if !os(OSX)
+        return
+#endif
+
         let queue = DispatchQueue(label: "nanomsg")
         
         var msg = "this is survey"

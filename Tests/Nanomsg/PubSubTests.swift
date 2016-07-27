@@ -14,6 +14,10 @@ class PubSubTests: XCTestCase {
         _ = try! client.connect(addr)
         client.sub_subscribe = ""
         
+#if !os(OSX)
+        return
+#endif
+
         let msg = "yo"
         
         DispatchQueue(label: "nanomsg").async {
