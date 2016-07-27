@@ -10,3 +10,4 @@ Nanomsg.xcodeproj
 build
 docs
 src/main.swift
+c

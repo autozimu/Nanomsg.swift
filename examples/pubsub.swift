@@ -18,20 +18,21 @@ if Process.arguments[1] == "server" {
 
 if server {
     let sock = try Socket(.PUB)
-    try sock.bind(Process.arguments[2])
+    _ = try sock.bind(Process.arguments[2])
 
     var i = 0
 
     while true {
         print("SERVER: PUBLISHING ID \(i)")
-        try sock.send("\(i)")
+        _ = try sock.send("\(i)")
         sleep(1)
         i += 1
     }
 
 } else {
     let sock = try Socket(.SUB)
-    try sock.connect(Process.arguments[2])
+    _ = try sock.connect(Process.arguments[2])
+    sock.sub_subscribe = ""
 
     while true {
         var msg = try sock.recvstr()

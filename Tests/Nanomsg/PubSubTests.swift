@@ -6,16 +6,15 @@ class PubSubTests: XCTestCase {
     let addr = "ipc:///tmp/pubsub.ipc"
 
     func testPubSub() {
-        let client = try! Socket(.SUB)
-        _ = try! client.connect(addr)
-
         let server = try! Socket(.PUB)
         _ = try! server.bind(addr)
         
-        let msg = "yo"
         
-        // FIXME
-        return
+        let client = try! Socket(.SUB)
+        _ = try! client.connect(addr)
+        client.sub_subscribe = ""
+
+        let msg = "yo"
         
         XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
         XCTAssertEqual(try! client.recvstr(), msg)

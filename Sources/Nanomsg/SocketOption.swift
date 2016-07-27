@@ -34,7 +34,7 @@ public extension Socket {
 
     /** Set socket option of String type. */
     internal func setOptStr(_ opt: CInt, _ newValue: String, level: CInt = NN_SOL_SOCKET) {
-        let sz = newValue.characters.count + 1
+        let sz = newValue.characters.count
         let ret = nn_setsockopt(socketid, level, opt, newValue, sz)
         if ret < 0 {
             print("Error occured while setting option (level: \(level), opt: \(opt)): \(error)")
