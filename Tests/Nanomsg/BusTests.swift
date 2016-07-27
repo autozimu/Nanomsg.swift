@@ -38,10 +38,16 @@ class BusTests: XCTestCase {
         let msg2 = "node2"
         let msg3 = "node3"
         
-        XCTAssertEqual(try! node0.send(msg0), msg0.characters.count + 1)
-        XCTAssertEqual(try! node1.send(msg1), msg1.characters.count + 1)
-        XCTAssertEqual(try! node2.send(msg2), msg2.characters.count + 1)
-        XCTAssertEqual(try! node3.send(msg3), msg3.characters.count + 1)
+#if !os(OSX)
+        return
+#endif
+
+        DispatchQueue(label: "nanomsg").async {
+            XCTAssertEqual(try! node0.send(msg0), msg0.characters.count + 1)
+            XCTAssertEqual(try! node1.send(msg1), msg1.characters.count + 1)
+            XCTAssertEqual(try! node2.send(msg2), msg2.characters.count + 1)
+            XCTAssertEqual(try! node3.send(msg3), msg3.characters.count + 1)
+        }
         
         XCTAssertEqual(try! node0.recvstr(), msg1)
         XCTAssertEqual(try! node0.recvstr(), msg2)
