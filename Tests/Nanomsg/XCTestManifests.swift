@@ -4,5 +4,7 @@ import XCTest
 public let allTests = [
     testCase(VersionTests.allTests),
     testCase(PipelineTests.allTests),
+    testCase(PairTests.allTests),
+    testCase(PubSubTests.allTests),
 ]
 #endif

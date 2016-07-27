@@ -1,6 +1,6 @@
 import XCTest
 
-import Nanomsg
+@testable import Nanomsg
 
 class PipelineTests: XCTestCase {
     let addr = "ipc:///tmp/pipeline.ipc"
