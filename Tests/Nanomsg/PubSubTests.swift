@@ -8,25 +8,23 @@ class PubSubTests: XCTestCase {
     func testPubSub() {
         let server = try! Socket(.PUB)
         _ = try! server.bind(addr)
-        
-        
+
+
         let client = try! Socket(.SUB)
         _ = try! client.connect(addr)
         client.sub_subscribe = ""
-        
-#if !os(OSX)
-        return
-#endif
 
+#if os(OSX)
         let msg = "yo"
-        
+
         DispatchQueue(label: "nanomsg").async {
             XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
         }
 
         XCTAssertEqual(try! client.recvstr(), msg)
+#endif
     }
-    
+
 #if !os(OSX)
     static let allTests = [
         ("testPubSub", testPubSub),
