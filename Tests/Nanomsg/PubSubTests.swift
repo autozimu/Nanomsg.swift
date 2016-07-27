@@ -25,7 +25,6 @@ class PubSubTests: XCTestCase {
         }
 
         XCTAssertEqual(try! client.recvstr(), msg)
-
     }
     
 #if !os(OSX)
