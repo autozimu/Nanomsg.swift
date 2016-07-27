@@ -21,7 +21,7 @@ class PairTests: XCTestCase {
     }
     
 #if !os(OSX)
-    static var allTests = [
+    static let allTests = [
         ("testPair", testPair),
     ]
 #endif

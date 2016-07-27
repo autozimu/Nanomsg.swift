@@ -7,5 +7,6 @@ public let allTests = [
     testCase(PairTests.allTests),
     testCase(PubSubTests.allTests),
     testCase(SurveyTests.allTests),
+    testCase(BusTests.allTests),
 ]
 #endif

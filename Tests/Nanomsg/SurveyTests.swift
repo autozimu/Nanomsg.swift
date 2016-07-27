@@ -34,7 +34,7 @@ class SurveyTests: XCTestCase {
     }
     
 #if !os(OSX)
-    static var allTests = [
+    static let allTests = [
         ("testSurvey", testSurvey),
     ]
 #endif

@@ -29,7 +29,7 @@ class PubSubTests: XCTestCase {
     }
     
 #if !os(OSX)
-    static var allTests = [
+    static let allTests = [
         ("testPubSub", testPubSub),
     ]
 #endif

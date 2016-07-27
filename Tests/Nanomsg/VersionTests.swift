@@ -10,8 +10,8 @@ class VersionTests: XCTestCase {
     }
 
 #if !os(OSX)
-    static var allTests = [
-            ("testVersion", testVersion)
+    static let allTests = [
+        ("testVersion", testVersion)
     ]
 #endif
 }

@@ -18,8 +18,8 @@ class PipelineTests: XCTestCase {
     }
 
 #if !os(OSX)
-    static var allTests = [
-            ("testPipeline", testPipeline)
+    static let allTests = [
+        ("testPipeline", testPipeline)
     ]
 #endif
 }
