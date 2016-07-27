@@ -14,13 +14,14 @@ class PubSubTests: XCTestCase {
         _ = try! client.connect(addr)
         client.sub_subscribe = ""
         
-        // FIXME
-        return
-
         let msg = "yo"
+        
+        DispatchQueue(label: "nanomsg").async {
+            XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
+        }
 
-        XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
         XCTAssertEqual(try! client.recvstr(), msg)
+
     }
     
 #if !os(OSX)
