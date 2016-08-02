@@ -6,7 +6,7 @@ build:
 test: build
 	swift test
 
-doc:
+docs:
 	swift package generate-xcodeproj
 	jazzy --clean \
 		--author "Junfeng (Jeff) Li" \
@@ -14,12 +14,12 @@ doc:
 		--github_url https://github.com/autozimu/Nanomsg.swift \
 		--github-file-prefix https://github.com/autozimu/Nanomsg.swift/blob/master
 
-gh-pages: doc
-	gh-pages --dist docs
+gh-pages: docs
+	ghp-import -n -p docs
 
 clean:
 	swift build --clean
 	rm -rf build
 	rm -rf docs
 
-.PHONY: build test doc gh-pages clean
+.PHONY: build test docs gh-pages clean
