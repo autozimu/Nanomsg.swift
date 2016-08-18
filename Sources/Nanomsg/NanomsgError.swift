@@ -6,7 +6,7 @@ var error: (CInt, String) {
     return (errno, msg)
 }
 
-public enum NanomsgError: ErrorProtocol {
+public enum NanomsgError: Error {
     case Err(errno: CInt, msg: String)
 
     init() {

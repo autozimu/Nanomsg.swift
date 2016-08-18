@@ -1,9 +1,9 @@
 import XCTest
 
-import NanomsgTestSuite
+import NanomsgTests
 
 var tests = [XCTestCaseEntry]()
 
-tests += NanomsgTestSuite.allTests
+tests += NanomsgTests.allTests
 
 XCTMain(tests)

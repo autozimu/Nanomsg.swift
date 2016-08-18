@@ -145,8 +145,8 @@ public class Socket {
      - returns: received content.
      */
     public func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
-        let p = UnsafeMutablePointer<UInt8>(allocatingCapacity: 1)
-        let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>(allocatingCapacity: 1)
+        let p = UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
+        let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>.allocate(capacity: 1)
         pp.pointee = p;
         let nRecv = nn_recv(socketid, p, NN_MSG, flags.rawValue)
         if nRecv < 0 {
@@ -164,7 +164,7 @@ public class Socket {
      */
     public func recvstr(flags: Flags = .None) throws -> String? {
         if let cstr = try recv(flags: flags).baseAddress {
-            return String(cString: UnsafePointer<CChar>(cstr))
+            return String(cString: cstr)
         } else {
             return nil
         }
