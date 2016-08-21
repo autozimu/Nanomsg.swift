@@ -160,20 +160,6 @@ public class Socket {
         return try T.deserialize(recv(flags: flags));
     }
 
-    /**
-     Receive a string.
-
-     - parameter flags: operation flags.
-     - returns: received string.
-     */
-    public func recvstr(flags: Flags = .None) throws -> String? {
-        if let cstr = try recv(flags: flags).baseAddress {
-            return String(cString: cstr)
-        } else {
-            return nil
-        }
-    }
-
     // Fine-grained alternative to send.
     func sendmsg() {
         // TODO
