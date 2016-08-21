@@ -21,7 +21,7 @@ class PubSubTests: XCTestCase {
             XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
         }
 
-        XCTAssertEqual(try! client.recvstr(), msg)
+        XCTAssertEqual(try! client.recv(), msg)
 #endif
     }
 
