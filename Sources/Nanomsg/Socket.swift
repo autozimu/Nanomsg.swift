@@ -156,6 +156,10 @@ public class Socket {
         return UnsafeMutableBufferPointer(start: p, count: Int(nRecv))
     }
 
+    public func recv<T: NanomsgSerializable>(flags: Flags = .None) throws -> T {
+        return try T.deserialize(recv(flags: flags));
+    }
+
     /**
      Receive a string.
 

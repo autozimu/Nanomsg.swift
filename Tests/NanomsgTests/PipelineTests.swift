@@ -14,7 +14,7 @@ class PipelineTests: XCTestCase {
         let str = "dadada"
 
         XCTAssertEqual(try! push.send(str), str.characters.count + 1)
-        XCTAssertEqual(try! pull.recvstr(), str)
+        XCTAssertEqual(try! pull.recv(), str)
     }
 
 #if !os(OSX)
