@@ -2,7 +2,7 @@ import CNanomsg
 
 public extension Socket {
     /** Get socket option of type Int. */
-    internal func getOpt(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> CInt {
+    func getOpt(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> CInt {
         var value: CInt = -1
         var size = MemoryLayout<CInt>.size
         let ret = nn_getsockopt(socketid, level, opt, &value, &size)
@@ -13,7 +13,7 @@ public extension Socket {
     }
 
     /** Get generic socket option of type String. */
-    internal func getOptStr(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> String {
+    func getOptStr(_ opt: CInt, level: CInt = NN_SOL_SOCKET) -> String {
         var sz = 100
         let value = UnsafeMutablePointer<CChar>.allocate(capacity: sz)
         let ret = nn_getsockopt(socketid, level, opt, value, &sz)
@@ -24,7 +24,7 @@ public extension Socket {
     }
 
     /** Set socket option of type Int. */
-    internal func setOpt(_ opt: CInt, _ newValue: CInt, level: CInt = NN_SOL_SOCKET) {
+    func setOpt(_ opt: CInt, _ newValue: CInt, level: CInt = NN_SOL_SOCKET) {
         var newValue = newValue
         let ret = nn_setsockopt(socketid, level, opt, &newValue, MemoryLayout<CInt>.size)
         if ret < 0 {
@@ -33,7 +33,7 @@ public extension Socket {
     }
 
     /** Set socket option of String type. */
-    internal func setOptStr(_ opt: CInt, _ newValue: String, level: CInt = NN_SOL_SOCKET) {
+    func setOptStr(_ opt: CInt, _ newValue: String, level: CInt = NN_SOL_SOCKET) {
         let sz = newValue.characters.count
         let ret = nn_setsockopt(socketid, level, opt, newValue, sz)
         if ret < 0 {
