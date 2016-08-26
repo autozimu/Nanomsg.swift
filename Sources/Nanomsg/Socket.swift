@@ -58,6 +58,7 @@ public class Socket {
      - parameter addr: address to bind to.
      - returns: endpoint id.
      */
+    @discardableResult
     public func bind(_ addr: String) throws -> Int {
         var eid: CInt = -1
         addr.withCString { caddr in
@@ -75,6 +76,7 @@ public class Socket {
      - parameter addr: address to connect to.
      - returns: endpoint id.
      */
+    @discardableResult
     public func connect(_ addr: String) throws -> Int {
         var eid: CInt = -1
         addr.withCString { caddr in
@@ -106,6 +108,7 @@ public class Socket {
          - flags: operation flags.
      - returns: number of bytes sent.
      */
+    @discardableResult
     public func send(_ msg: [UInt8], flags: Flags = .None) throws -> Int {
         let sz_msg = msg.count
         var nSent: CInt = 0
@@ -126,6 +129,7 @@ public class Socket {
          - flags: operation flags.
      - returns: number of bytes sent.
      */
+    @discardableResult
     public func send(_ msg: String, flags: Flags = .None) throws -> Int {
         let sz_msg = msg.characters.count + 1
         var nSent : CInt = 0
