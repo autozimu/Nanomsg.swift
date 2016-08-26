@@ -11,20 +11,24 @@ used, add this package as a dependency in `Package.swift`,
 ## Example
 
 Push
+```swift
+import Nanomsg
 
-    import Nanomsg
-
-    let sock = try Socket(.PUSH)
-    try sock.connect("ipc:///tmp/pipeline.ipc")
-    try sock.send("Yo!")
+let sock = try Socket(.PUSH)
+try sock.connect("ipc:///tmp/pipeline.ipc")
+try sock.send("Yo!")
+```
 
 Pull
 
-    import Nanomsg
+```swift
+import Nanomsg
 
-    let sock = try Socket(.PULL)
-    try sock.bind("ipc:///tmp/pipeline.ipc")
-    try print(sock.recvstr())
+let sock = try Socket(.PULL)
+try sock.bind("ipc:///tmp/pipeline.ipc")
+let msg: String = try sock.recv()
+print(msg) // Yo!
+```
 
 More examples could be found in examples dir.
 

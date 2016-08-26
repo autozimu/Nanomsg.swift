@@ -1,2 +1,3 @@
 - ErrorEnum?.
 - NN_MAXTTL.
+- Allow unuse.
