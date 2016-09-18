@@ -3,6 +3,11 @@ matrix:
     include:
         - os: osx
           osx_image: xcode8
+          install:
+              - ./.travis-nanomsg.sh
+          cache:
+              directories:
+                  - $HOME/.nanomsg
         - os: linux
           sudo: required
           dist: trusty
