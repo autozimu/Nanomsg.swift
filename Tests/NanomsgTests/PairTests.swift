@@ -20,9 +20,9 @@ class PairTests: XCTestCase {
         XCTAssertEqual(try! node0.recv(), world)
     }
 
-#if !os(OSX)
-    static let allTests = [
-        ("testPair", testPair),
-    ]
-#endif
+    #if !os(OSX)
+        static let allTests = [
+            ("testPair", testPair),
+        ]
+    #endif
 }

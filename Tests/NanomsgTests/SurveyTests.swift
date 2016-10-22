@@ -12,28 +12,28 @@ class SurveyTests: XCTestCase {
         let respondent = try! Socket(.RESPONDENT)
         _ = try! respondent.connect(addr)
 
-#if os(OSX)
-        // let queue = DispatchQueue(label: "nanomsg")
+        #if os(OSX)
+            // let queue = DispatchQueue(label: "nanomsg")
 
-        // var msg = "this is survey"
+            // var msg = "this is survey"
 
-        // queue.async {
-        //     XCTAssertEqual(try! surveyor.send(msg), msg.characters.count + 1)
-        // }
-        // XCTAssertEqual(try! respondent.recvstr(), msg)
+            // queue.async {
+            //     XCTAssertEqual(try! surveyor.send(msg), msg.characters.count + 1)
+            // }
+            // XCTAssertEqual(try! respondent.recvstr(), msg)
 
-        // msg = "this is response"
+            // msg = "this is response"
 
-        // queue.async {
-        //     XCTAssertEqual(try! respondent.send(msg), msg.characters.count + 1)
-        // }
-        // XCTAssertEqual(try! surveyor.recvstr(), msg)
-#endif
+            // queue.async {
+            //     XCTAssertEqual(try! respondent.send(msg), msg.characters.count + 1)
+            // }
+            // XCTAssertEqual(try! surveyor.recvstr(), msg)
+        #endif
     }
 
-#if !os(OSX)
-    static let allTests = [
-        ("testSurvey", testSurvey),
-    ]
-#endif
+    #if !os(OSX)
+        static let allTests = [
+            ("testSurvey", testSurvey),
+        ]
+    #endif
 }

@@ -6,4 +6,3 @@ public enum Domain: CInt {
     /** Raw SP socket. */
     case AF_SP_RAW = 2
 }
-

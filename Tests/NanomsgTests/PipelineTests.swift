@@ -17,9 +17,9 @@ class PipelineTests: XCTestCase {
         XCTAssertEqual(try! pull.recv(), str)
     }
 
-#if !os(OSX)
-    static let allTests = [
-        ("testPipeline", testPipeline)
-    ]
-#endif
+    #if !os(OSX)
+        static let allTests = [
+            ("testPipeline", testPipeline),
+        ]
+    #endif
 }

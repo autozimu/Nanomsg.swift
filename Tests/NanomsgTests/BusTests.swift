@@ -26,29 +26,29 @@ class BusTests: XCTestCase {
 
         usleep(10 * 1000)
 
-#if os(OSX)
-        let msg0 = "node0"
-        let msg1 = "node11"
-        let msg2 = "node222"
+        #if os(OSX)
+            let msg0 = "node0"
+            let msg1 = "node11"
+            let msg2 = "node222"
 
-        XCTAssertEqual(try! node0.send(msg0), msg0.characters.count + 1)
-        XCTAssertEqual(try! node1.send(msg1), msg1.characters.count + 1)
-        XCTAssertEqual(try! node2.send(msg2), msg2.characters.count + 1)
+            XCTAssertEqual(try! node0.send(msg0), msg0.characters.count + 1)
+            XCTAssertEqual(try! node1.send(msg1), msg1.characters.count + 1)
+            XCTAssertEqual(try! node2.send(msg2), msg2.characters.count + 1)
 
-        // XCTAssertEqual(try! node0.recvstr(), msg1)
-        // XCTAssertEqual(try! node0.recvstr(), msg2)
+            // XCTAssertEqual(try! node0.recvstr(), msg1)
+            // XCTAssertEqual(try! node0.recvstr(), msg2)
 
-        // XCTAssertEqual(try! node1.recvstr(), msg0)
-        // XCTAssertEqual(try! node1.recvstr(), msg2)
+            // XCTAssertEqual(try! node1.recvstr(), msg0)
+            // XCTAssertEqual(try! node1.recvstr(), msg2)
 
-        // XCTAssertEqual(try! node2.recvstr(), msg0)
-        // XCTAssertEqual(try! node2.recvstr(), msg1)
-#endif
+            // XCTAssertEqual(try! node2.recvstr(), msg0)
+            // XCTAssertEqual(try! node2.recvstr(), msg1)
+        #endif
     }
 
-#if !os(OSX)
-    static let allTests = [
-        ("testBus", testBus),
-    ]
-#endif
+    #if !os(OSX)
+        static let allTests = [
+            ("testBus", testBus),
+        ]
+    #endif
 }

@@ -31,5 +31,4 @@ public enum Proto: CInt {
     // bus.h
     /** Message bus protocol. */
     case BUS = 112
-
 }

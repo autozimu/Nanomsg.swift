@@ -1,7 +1,7 @@
 import os
 
 guard Process.argc > 1
-        && ((Process.arguments[1] == "server" && Process.argc == 3)
+    && ((Process.arguments[1] == "server" && Process.argc == 3)
         || (Process.arguments[1] == "client" && Process.argc == 4)) else {
     print("Usage: ./pubsub server [addr]")
     print("Usage: ./pubsub client [addr] [name]")
@@ -14,7 +14,6 @@ if Process.arguments[1] == "server" {
 } else {
     client = true
 }
-
 
 if server {
     let sock = try Socket(.PUB)

@@ -10,8 +10,8 @@ public class Socket {
      Create an SP socket.
 
      - parameters:
-         - domain: domain of the socket.
-         - proto: type of the socket.
+     - domain: domain of the socket.
+     - proto: type of the socket.
      */
     public init(domain: Domain, proto: Proto) throws {
         self.domain = domain
@@ -104,8 +104,8 @@ public class Socket {
      Send a message.
 
      - parameters:
-         - msg: content to send.
-         - flags: operation flags.
+     - msg: content to send.
+     - flags: operation flags.
      - returns: number of bytes sent.
      */
     @discardableResult
@@ -125,14 +125,14 @@ public class Socket {
      Send a string.
 
      - parameters:
-         - msg: string to send.
-         - flags: operation flags.
+     - msg: string to send.
+     - flags: operation flags.
      - returns: number of bytes sent.
      */
     @discardableResult
     public func send(_ msg: String, flags: Flags = .None) throws -> Int {
         let sz_msg = msg.characters.count + 1
-        var nSent : CInt = 0
+        var nSent: CInt = 0
 
         nSent = nn_send(socketid, msg, sz_msg, flags.rawValue)
         if nSent < 0 {
@@ -151,7 +151,7 @@ public class Socket {
     public func recv(flags: Flags = .None) throws -> UnsafeMutableBufferPointer<UInt8> {
         let p = UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
         let pp = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>.allocate(capacity: 1)
-        pp.pointee = p;
+        pp.pointee = p
         let nRecv = nn_recv(socketid, p, NN_MSG, flags.rawValue)
         if nRecv < 0 {
             throw NanomsgError()
@@ -161,17 +161,17 @@ public class Socket {
     }
 
     public func recv<T: NanomsgSerializable>(flags: Flags = .None) throws -> T {
-        return try T.deserialize(recv(flags: flags));
+        return try T.deserialize(recv(flags: flags))
     }
 
     // Fine-grained alternative to send.
     func sendmsg() {
-        // TODO
+        // TODO: 
     }
 
     // Find-grained alternative to recv.
     func recvmsg() {
-        // TODO
+        // TODO: 
     }
 
     /**

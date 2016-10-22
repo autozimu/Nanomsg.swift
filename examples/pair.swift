@@ -1,6 +1,6 @@
 import os
 
-guard Process.argc == 3 && (Process.arguments[1] ==  "node0" || Process.arguments[1] == "node1") else {
+guard Process.argc == 3 && (Process.arguments[1] == "node0" || Process.arguments[1] == "node1") else {
     print("Usage: ./pair node0|node1 addr")
     exit(1)
 }
@@ -33,4 +33,3 @@ while true {
         try sock.send("node1")
     }
 }
-
