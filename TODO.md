@@ -1,2 +1,3 @@
 - ErrorEnum?.
 - NN_MAXTTL.
+- Make examples buildable directly from spm.
