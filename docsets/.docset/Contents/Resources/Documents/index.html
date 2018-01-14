@@ -13,7 +13,7 @@
     <a title="  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html"> Docs</a> (84% documented)</p>
+        <p><a href="index.html"> Docs</a> (0% documented)</p>
         <p class="header-right"><a href="https://github.com/autozimu/Nanomsg.swift"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -27,117 +27,50 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="Classes.html">Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/Socket.html">Socket</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Global Variables.html">Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Global Variables.html#/s:v7Nanomsg14NN_VERSION_AGEVs5Int32">NN_VERSION_AGE</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global Variables.html#/s:v7Nanomsg18NN_VERSION_CURRENTVs5Int32">NN_VERSION_CURRENT</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global Variables.html#/s:v7Nanomsg19NN_VERSION_REVISIONVs5Int32">NN_VERSION_REVISION</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Enums.html">Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/Domain.html">Domain</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/Flags.html">Flags</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/NanomsgError.html">NanomsgError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/Proto.html">Proto</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/WSMsgType.html">WSMsgType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Functions.html">Functions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Functions.html#/s:F7Nanomsg6symbolFT5indexVs5Int32_TS0_GSqSS__">symbol(index:)</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Protocols.html">Protocols</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Protocols/NanomsgSerializable.html">NanomsgSerializable</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class="main-content">
         <section>
           <section class="section">
             
-            <a href='#swift-binding-for-a-href-http-nanomsg-org-nanomsg-a' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='swift-binding-for-a-href-http-nanomsg-org-nanomsg-a'>Swift binding for <a href="http://nanomsg.org/">nanomsg</a></h1>
+            <h1 id='swift-binding-for-a-href-http-nanomsg-org-nanomsg-a' class='heading'>Swift binding for <a href="http://nanomsg.org/">nanomsg</a></h1>
 
 <p><a href="https://travis-ci.org/autozimu/Nanomsg.swift"><img src="https://travis-ci.org/autozimu/Nanomsg.swift.svg?branch=master" alt="Build Status"></a></p>
-<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
+<h2 id='usage' class='heading'>Usage</h2>
 
 <p>If <a href="https://github.com/apple/swift-package-manager">Swift Package Manager</a> is
 used, add this package as a dependency in <code>Package.swift</code>,</p>
-<pre class="highlight plaintext"><code>.Package(url: "https://github.com/autozimu/Nanomsg.swift.git", majorVersion: 0)
+<pre class="highlight swift"><code><span class="o">.</span><span class="nf">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/autozimu/Nanomsg.swift.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre>
-<a href='#example' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='example'>Example</h2>
+<h2 id='example' class='heading'>Example</h2>
 
-<p>Push
-&ldquo;`swift
-import Nanomsg</p>
+<p>Push</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Nanomsg</span>
 
-<p>let sock = try Socket(.PUSH)
-try sock.connect(<q>ipc:///tmp/pipeline.ipc</q>)
-try sock.send(<q>Yo!</q>)
-&rdquo;`</p>
+<span class="k">let</span> <span class="nv">sock</span> <span class="o">=</span> <span class="k">try</span> <span class="nf">Socket</span><span class="p">(</span><span class="o">.</span><span class="kt">PUSH</span><span class="p">)</span>
+<span class="k">try</span> <span class="n">sock</span><span class="o">.</span><span class="nf">connect</span><span class="p">(</span><span class="s">"ipc:///tmp/pipeline.ipc"</span><span class="p">)</span>
+<span class="k">try</span> <span class="n">sock</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="s">"Yo!"</span><span class="p">)</span>
+</code></pre>
 
 <p>Pull</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Nanomsg</span>
 
-<span class="k">let</span> <span class="nv">sock</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Socket</span><span class="p">(</span><span class="o">.</span><span class="kt">PULL</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">sock</span> <span class="o">=</span> <span class="k">try</span> <span class="nf">Socket</span><span class="p">(</span><span class="o">.</span><span class="kt">PULL</span><span class="p">)</span>
 <span class="k">try</span> <span class="n">sock</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="s">"ipc:///tmp/pipeline.ipc"</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">msg</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="k">try</span> <span class="n">sock</span><span class="o">.</span><span class="nf">recv</span><span class="p">()</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="c1">// Yo!</span>
 </code></pre>
 
 <p>More examples could be found in examples dir.</p>
-<a href='#documentation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='documentation'>Documentation</h2>
+<h2 id='documentation' class='heading'>Documentation</h2>
 
 <p><a href="https://autozimu.github.io/Nanomsg.swift/">https://autozimu.github.io/Nanomsg.swift/</a></p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/autozimu" target="_blank" rel="external">Junfeng (Jeff) Li</a>. All rights reserved. (Last updated: 2016-08-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/autozimu" target="_blank" rel="external">Junfeng Li</a>. All rights reserved. (Last updated: 2018-01-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
