@@ -20,5 +20,5 @@ if [[ ! -d $HOME/.nanomsg/build ]]; then
 fi
 
 cd $HOME/.nanomsg/build
-sudo cmake --build . --target install
+sudo /usr/bin/cmake --build . --target install
 sudo ldconfig
