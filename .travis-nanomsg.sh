@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euf -o pipefail
+set -eufx -o pipefail
 
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
     brew update
@@ -12,7 +12,7 @@ if [[ ! -d $HOME/.nanomsg/build ]]; then
     rm -rf $HOME/.nanomsg
     git clone https://github.com/nanomsg/nanomsg.git $HOME/.nanomsg
     cd $HOME/.nanomsg
-    git checkout 1.0.0
+    git checkout 1.1.2
     mkdir build
     cd build
     cmake ..
