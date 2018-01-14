@@ -12,11 +12,11 @@ class PairTests: XCTestCase {
         _ = try! node1.bind(addr)
 
         let hello = "hello"
-        XCTAssertEqual(try! node0.send(hello), hello.characters.count + 1)
+        XCTAssertEqual(try! node0.send(hello), hello.count + 1)
         XCTAssertEqual(try! node1.recv(), hello)
 
         let world = "hello"
-        XCTAssertEqual(try! node1.send(world), world.characters.count + 1)
+        XCTAssertEqual(try! node1.send(world), world.count + 1)
         XCTAssertEqual(try! node0.recv(), world)
     }
 

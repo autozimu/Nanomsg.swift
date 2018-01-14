@@ -17,7 +17,7 @@ class PubSubTests: XCTestCase {
             let msg = "yo"
 
             DispatchQueue(label: "nanomsg").async {
-                XCTAssertEqual(try! server.send(msg), msg.characters.count + 1)
+                XCTAssertEqual(try! server.send(msg), msg.count + 1)
             }
 
             XCTAssertEqual(try! client.recv(), msg)

@@ -31,9 +31,9 @@ class BusTests: XCTestCase {
             let msg1 = "node11"
             let msg2 = "node222"
 
-            XCTAssertEqual(try! node0.send(msg0), msg0.characters.count + 1)
-            XCTAssertEqual(try! node1.send(msg1), msg1.characters.count + 1)
-            XCTAssertEqual(try! node2.send(msg2), msg2.characters.count + 1)
+            XCTAssertEqual(try! node0.send(msg0), msg0.count + 1)
+            XCTAssertEqual(try! node1.send(msg1), msg1.count + 1)
+            XCTAssertEqual(try! node2.send(msg2), msg2.count + 1)
 
             // XCTAssertEqual(try! node0.recvstr(), msg1)
             // XCTAssertEqual(try! node0.recvstr(), msg2)

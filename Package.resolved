@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CNanomsg",
+        "repositoryURL": "https://github.com/autozimu/CNanomsg.git",
+        "state": {
+          "branch": null,
+          "revision": "8184297fa0d168300460cce58bfa6fc9d8fb8986",
+          "version": "0.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

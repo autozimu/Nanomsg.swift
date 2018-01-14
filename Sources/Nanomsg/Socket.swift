@@ -131,7 +131,7 @@ public class Socket {
      */
     @discardableResult
     public func send(_ msg: String, flags: Flags = .None) throws -> Int {
-        let sz_msg = msg.characters.count + 1
+        let sz_msg = msg.count + 1
         var nSent: CInt = 0
 
         nSent = nn_send(socketid, msg, sz_msg, flags.rawValue)
