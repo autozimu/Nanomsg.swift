@@ -19,6 +19,6 @@ else
     fi
 
     cd $HOME/.nanomsg/build
-    cmake --build . --target install
-    ldconfig
+    sudo cmake --build . --target install
+    sudo ldconfig
 fi
