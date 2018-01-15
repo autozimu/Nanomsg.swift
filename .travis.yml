@@ -1,15 +1,23 @@
-os:
-  - linux
-  - osx
 language: generic
-sudo: required
-dist: xenial
-osx_image: xcode9
+
+matrix:
+  include:
+    # Linux
+    - dist: trusty
+      sudo: false
+
+    # OSX
+    - os: osx
+      osx_image: xcode9
+
 install:
   - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
-  - sudo apt update && sudo apt install libnanomsg-dev --yes
+  - ./.ci/install-nanomsg.sh
+
 cache:
     directories:
         - $HOME/.swiftenv
+        - $HOME/.nanomsg
+
 script:
   - swift test
