@@ -1,4 +1,5 @@
 # Swift binding for [nanomsg](http://nanomsg.org/)
+[![CircleCI](https://circleci.com/gh/autozimu/Nanomsg.swift.svg?style=svg)](https://circleci.com/gh/autozimu/Nanomsg.swift)
 
 ## Usage
 
