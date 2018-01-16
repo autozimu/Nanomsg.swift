@@ -22,4 +22,10 @@ clean:
 	rm -rf build
 	rm -rf docs
 
+build-docker-image:
+	docker build --tag autozimu/nanomsg.swift .ci
+
+publish-docker-image:
+	docker push autozimu/nanomsg.swift
+
 .PHONY: build test docs gh-pages clean

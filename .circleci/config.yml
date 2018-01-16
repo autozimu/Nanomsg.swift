@@ -1,0 +1,8 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: autozimu/nanomsg.swift
+    steps:
+      - run: swift build
+      - run: swift test
